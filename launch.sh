@@ -106,9 +106,12 @@ aws rds wait db-instance-available --db-instance-identifier simmon-the-cat-db
 
 echo -e "\n Finished creating the database."
 
+# db read-only replica
+aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db --public-accessible
 
+echo "db read-only replica created! "
 
 # 11 cloudwatch metrics (updatd Nov 6, 2015)
 # ref: http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/UsingAlarmActions.html#UsingCLIorAPI
-#aws cloudwatch put-metric-alarm --alarm-name SIMMON-ALARM --alarm-description "Terminate the instance when it is idle for a day" --namespace "AWS/EC2" --dimensions Name=InstanceId,Value="i-abc123" --statistic Average  --metric-name CPUUtilization --comparison-operator LessThanThreshold --threshold 1 --period 86400 --evaluation-periods 4 -- alarm-actions arn:aws:automate:us-east-1:ec2:terminate
+aws cloudwatch put-metric-alarm --metric-name SIMMON-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:(----to be added---)
 
