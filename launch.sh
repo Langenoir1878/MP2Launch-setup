@@ -115,3 +115,10 @@ echo "db read-only replica created! "
 # ref: http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/UsingAlarmActions.html#UsingCLIorAPI
 aws cloudwatch put-metric-alarm --metric-name SIMMON-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:(----to be added---)
 
+# 12 skipping the manual setup process (added Nov 19, 2015)
+echo "\nSetting up database for testing, please wait . . . "
+
+sudo php ../MP2Application-setup/setup.php
+
+
+echo -e "\nDone! Please navigate to index.php in the web browser bar for testing. "
