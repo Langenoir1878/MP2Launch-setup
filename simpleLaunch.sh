@@ -17,17 +17,17 @@ echo -e "\n Finished creating the database."
 # db read-only replica
 echo "\nCreating read-only replica . . ."
 
-aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db --public-accessible
+aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db 
 
 echo "db read-only replica created! "
 
 #skipping the manual setup process
-echo "\nSetting up database for testing, please wait . . . "
+#echo "\nSetting up database for testing, please wait . . . "
 
-sudo php ../MP2Application-setup/setup.php
+#sudo php ../MP2Application-setup/setup.php
 
 
-echo -e "\nDone! Please navigate to index.php in the web browser bar for testing. "
+#echo -e "\nDone! Please navigate to index.php in the web browser bar for testing. "
 
 # cloudwatch, updated Nov 19th, 2015 ---to be added into launch.sh
 # aws cloudwatch put-metric-alarm --metric-name SIMMON-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:(----to be added---)
