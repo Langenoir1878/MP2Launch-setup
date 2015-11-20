@@ -113,8 +113,8 @@ echo "db read-only replica created! "
 
 # 11 cloudwatch metrics (updatd Nov 6, 2015)
 # ref: http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/UsingAlarmActions.html#UsingCLIorAPI
-aws cloudwatch put-metric-alarm --metric-name SIMMON-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:(----to be added---)
-
+aws cloudwatch put-metric-alarm --metric-name SIMMON-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:
+aws cloudwatch put
 # 12 skipping the manual setup process (added Nov 19, 2015)
 #echo "\nSetting up database for testing, please wait . . . "
 
