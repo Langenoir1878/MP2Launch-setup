@@ -21,7 +21,7 @@
 declare -a instanceARR
 
 # 3. mapfile (updated Nov 4, 2015)
-mapfile -t instanceARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3 --security-group-ids $4 --subnet-id $5 --key-name $6  --associate-public-ip-address --iam-instance-profile Name=$7 --user-data file://../MP2Environment-setup/install-webserver.sh --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g" --debug)
+mapfile -t instanceARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3 --security-group-ids $4 --subnet-id $5 --key-name $6  --associate-public-ip-address --iam-instance-profile Name=$7 --user-data file://../MP2Environment-setup/install-webserver.sh --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g")
 
 echo ${instanceARR[@]}
 
@@ -107,14 +107,14 @@ aws rds wait db-instance-available --db-instance-identifier simmon-the-cat-db
 echo -e "\n Finished creating the database."
 
 # db read-only replica
-aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db --public-accessible
+aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db
 
 echo "db read-only replica created! "
 
 # 11 cloudwatch metrics (updatd Nov 6, 2015)
 # ref: http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/UsingAlarmActions.html#UsingCLIorAPI
-aws cloudwatch put-metric-alarm --metric-name SIMMON-CW-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:aws:sns:us-east-1:186069030643:mp2
-aws cloudwatch put-metric-alarm --metric-name SIMMON-SNS-METRIC --alarm-name SIMMON-SNS-ALARM --alarm-description "SNS alarm triggered: Updates available" --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 -- alarm-actions arn:aws:sns:us-east-1:186069030643:mp2
+aws cloudwatch put-metric-alarm --metric-name SIMMON-CW-METRIC --alarm-name SIMMON-ALARM --alarm-description "SIMMON-ALARM triggered! " --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 --alarm-actions arn:aws:sns:us-east-1:186069030643:mp2 --unit Percet
+aws cloudwatch put-metric-alarm --metric-name SIMMON-SNS-METRIC --alarm-name SIMMON-SNS-ALARM --alarm-description "SNS alarm triggered: Updates available" --namespace AWS/EC2 --dimensions Name=SIMMON-AUTO-SCALE,Value=SIMMON-AUTO-SCALE --statistic Average  --metric-name CPUUtilization --comparison-operator GreaterThanOrEqualToThreshold --threshold 30 --period 360 --evaluation-periods 4 --alarm-actions arn:aws:sns:us-east-1:186069030643:mp2
 # 12 skipping the manual setup process (added Nov 19, 2015)
 #echo "\nSetting up database for testing, please wait . . . "
 
