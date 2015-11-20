@@ -15,11 +15,11 @@ aws rds wait db-instance-available --db-instance-identifier simmon-the-cat-db
 echo -e "\n Finished creating the database."
 
 # db read-only replica
-echo "\nCreating read-only replica . . ."
+echo "\n Creating read-only replica . . ."
 
 aws rds create-db-instance-read-replica --db-instance-identifier simmon-the-cat-db-read-only --source-db-instance-identifier simmon-the-cat-db 
 
-echo "db read-only replica created! "
+echo "Read-only replica created: simmon-the-cat-db-read-only "
 
 #skipping the manual setup process
 #echo "\nSetting up database for testing, please wait . . . "
